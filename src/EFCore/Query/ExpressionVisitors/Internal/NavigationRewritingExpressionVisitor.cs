@@ -1198,10 +1198,14 @@ namespace Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal
 
             foreach (var includeResultOperator in _queryModelVisitor.QueryCompilationContext.QueryAnnotations.OfType<IncludeResultOperator>())
             {
-                if (includeResultOperator.PathFromQuerySource.TryGetReferencedQuerySource()
-                    == additionalFromClauseBeingProcessed)
+                includeResultOperator.PathFromQuerySource
+                    = ReferenceReplacingExpressionVisitor.ReplaceClauseReferences(
+                        includeResultOperator.PathFromQuerySource,
+                        querySourceMapping,
+                        throwOnUnmappedReferences: false);
+
+                if (includeResultOperator.QuerySource == additionalFromClauseBeingProcessed)
                 {
-                    includeResultOperator.PathFromQuerySource = querySourceReferenceExpression;
                     includeResultOperator.QuerySource = querySourceReferenceExpression.ReferencedQuerySource;
                 }
             }

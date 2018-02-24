@@ -407,6 +407,18 @@ namespace Microsoft.EntityFrameworkCore.Query
         {
         }
 
+        public override void Include_after_SelectMany_and_reference_navigation()
+        {
+        }
+
+        public override void Include_after_multiple_SelectMany_and_reference_navigation()
+        {
+        }
+
+        public override void Include_after_SelectMany_and_multiple_reference_navigations()
+        {
+        }
+
         #endregion
     }
 }
